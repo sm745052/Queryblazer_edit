@@ -4,7 +4,7 @@ set -e
 LOG_FILE=data/DDC/train.txt
 
 # OUTPUT FILES; will overwrite
-OUTPUT_DIR=experiments/DDC/bpe/4096
+OUTPUT_DIR=experiments/
 LOG_ENCODED=$OUTPUT_DIR/train.enc
 SPM_PREFIX=$OUTPUT_DIR/subword # $SPM_PREFIX.{m, vocab}
 ENCODER=$OUTPUT_DIR/encoder.fst
