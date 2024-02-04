@@ -21,4 +21,4 @@ LM_PRUNE="--prune 0 1 1 2 2 3 3 4"
 mkdir -p $OUTPUT_DIR
 # OUTPUT_DIR=data/DSTC7/bpe/4096
 # python3 script/extract_prefix.py --n 57 < $LOG_FILE > $OUTPUT_DIR/test.prefix
-python3 script/complete.py --encoder $ENCODER --model $LANGUAGE_MODEL.fst --precomputed $PRECOMPUTED < $LOG_FILE > $OUTPUT_DIR/test.range.complete
+python3 script/range_complete.py --encoder $ENCODER --model $LANGUAGE_MODEL.fst --precomputed $PRECOMPUTED < $LOG_FILE > $OUTPUT_DIR/test.range.complete
