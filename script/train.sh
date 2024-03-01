@@ -1,7 +1,7 @@
 set -e
 
 # INPUT
-LOG_FILE=data/DSTC7/train.txt
+LOG_FILE=data/DDC/seen/train.txt
 
 # OUTPUT FILES; will overwrite
 OUTPUT_DIR=experiments/
