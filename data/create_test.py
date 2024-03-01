@@ -2,6 +2,7 @@ import sys
 import argparse
 from numpy import random
 import tqdm
+import os
 
 """
 read queries from stdin corresponding each line
@@ -12,22 +13,54 @@ skip queries that do not meet the condition provided
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--n', type=int, required=True, help='number of prefix/suffix splits to be done for each query')
     parser.add_argument('--inp', type=str, default='data/DDC/test.txt')
-    parser.add_argument('--out', type=str, default='data/DDC/test_formatted.txt')
+    parser.add_argument('--out_dir', type=str, default='data/DDC/')
+    parser.add_argument('--train_file', type=str, required=True)
+    
     args = parser.parse_args()
     random.seed(args.seed)
 
-    with open(args.out, 'w') as fw:
-        with open(args.inp, 'r') as fr:
-            for query in tqdm.tqdm(fr):
-                query = query.strip().lower()
-                n = len(query)
-                if n < 2:
-                    continue
-                for kk in range(min(args.n, n-1)):
-                    l = random.randint(1, n)
-                    fw.write('\t'.join([query[:l], query[l:]]) + "\n")
+    args = parser.parse_args()
+    
+    
+    # read line by line and find intersection
+
+    with open(args.inp, 'r') as f:
+        file1 = f.readlines()
+    with open(args.train_file, 'r') as f:
+        file2 = f.readlines()
+    file1 = set(file1)
+    file2 = set(file2)
+
+    seen = file1.intersection(file2)
+    unseen = file1 - seen
+
+    if(not os.path.exists(os.path.join(args.out_dir, 'seen'))):
+        os.makedirs(os.path.join(args.out_dir, 'seen'))
+    
+    
+    if(not os.path.exists(os.path.join(args.out_dir, 'unseen'))):
+        os.makedirs(os.path.join(args.out_dir, 'unseen'))
+
+    with open(os.path.join(args.out_dir, 'seen/test_formatted.txt'), 'w') as fw:
+        fr = seen
+        for query in tqdm.tqdm(fr):
+            query = query.strip().lower()
+            n = len(query)
+            if n < 2:
+                continue
+            for l in range(1, n):
+                fw.write('\t'.join([query[:l], query[l:]]) + "\n")
+    
+    with open(os.path.join(args.out_dir, 'unseen/test_formatted.txt'), 'w') as fw:
+        fr = unseen
+        for query in tqdm.tqdm(fr):
+            query = query.strip().lower()
+            n = len(query)
+            if n < 2:
+                continue
+            for l in range(1, n):
+                fw.write('\t'.join([query[:l], query[l:]]) + "\n")
 
 
 if __name__ == '__main__':
