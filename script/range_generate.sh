@@ -1,8 +1,8 @@
 set -e
 
 # INPUT
-LOG_FILE=data/DDC/seen/test_formatted.txt
-OUTPUT_FORMAT=out.range.seen.ddc.qb
+LOG_FILE=data/DDC/unseen/test_formatted.txt
+OUTPUT_FORMAT=out.range.unseen.ddc.qb
 # OUTPUT FILES; will overwrite
 OUTPUT_DIR=experiments/
 LOG_ENCODED=$OUTPUT_DIR/train.enc
